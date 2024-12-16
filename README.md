@@ -7,7 +7,7 @@ This project demonstrates an IoT sensor system built on ESP32 that reads data fr
 
 ## Features
 
-- **OLED Display**: Displays sensor data on a 128x64 SH1107 OLED display with scrolling text.
+- **OLED Display**: Displays sensor data on a 128x64 SSD1306 OLED display with scrolling text.
 - **Button Controls**: Two buttons for restarting and resetting the system.
 - **Wi-Fi**: Connects to a Wi-Fi network to send data to a server.
 - **MQTT**: Publishes sensor data to a remote MQTT broker.
@@ -16,10 +16,10 @@ This project demonstrates an IoT sensor system built on ESP32 that reads data fr
 ## Hardware Requirements
 
 - **ESP32 Development Board**
-- **OLED Display**: SH1107, connected via I2C
+- **OLED Display**: SSD1306, connected via I2C
 - **DHT11 Sensor**: For temperature and humidity readings
-- **Light Sensor**
-- **Moisture Sensor**
+- **Light Sensor** 
+- **Moisture Sensor** 
 - **2 Push Buttons**: For reset and restart functionality
 
 ## Pin Configuration
