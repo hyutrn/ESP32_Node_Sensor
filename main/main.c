@@ -230,6 +230,7 @@ void init_gpio(void) {
 void sensorTask(void *arg){
     while(1){
         ESP_LOGI("MAIN", "Main program running...");
+        /*
         if (client != NULL) { // Kiểm tra client đã khởi tạo hay chưa
             dataSend(client);
         }
@@ -242,8 +243,12 @@ void sensorTask(void *arg){
         if (xQueueSend(oled_queue, &oled_msg, 0) != pdTRUE) {
             ESP_LOGW("MAIN", "OLED queue full, message not sent");
         }
-
+        */
+        dht_num(GPIO_NUM_4);
+        mois_num(GPIO_NUM_16);
+        light_num(GPIO_NUM_25);
         vTaskDelay(4000/portTICK_PERIOD_MS);
+
     }
 }
 
@@ -279,6 +284,10 @@ void app_main(void) {
 
     // Khởi tạo các nút nhấn và LED
     init_gpio();
+    
+    //Read and send data
+    xSemaphoreSensor = xSemaphoreCreateBinary();
+    xTaskCreate(sensorTask, "SensorTask", 4096, NULL, 9, NULL);
     
     oled_msg_t msg = {
         .line1 = "Waiting",       // Hiển thị "Waiting" ở dòng 1
