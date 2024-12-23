@@ -16,41 +16,31 @@ esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
     // your_context_t *context = event->context;
     switch (event->event_id) {
     case MQTT_EVENT_CONNECTED:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_CONNECTED");
-        msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
-        //ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
-
-        msg_id = esp_mqtt_client_subscribe(client, "/topic/qos1", 1);
-        //ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
-
-        msg_id = esp_mqtt_client_unsubscribe(client, "/topic/qos1");
-        //ESP_LOGI(TAG, "sent unsubscribe successful, msg_id=%d", msg_id);
+        ESP_LOGI("MQTT", "MQTT_EVENT_CONNECTED");
         break;
     case MQTT_EVENT_DISCONNECTED:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_DISCONNECTED");
+        ESP_LOGI("MQTT", "MQTT_EVENT_DISCONNECTED");
         break;
 
     case MQTT_EVENT_SUBSCRIBED:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_SUBSCRIBED, msg_id=%d", event->msg_id);
-        msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "Hello broker", 0, 0, 0);
-        ESP_LOGI("MQTTWSS", "sent publish successful, msg_id=%d", msg_id);
+        ESP_LOGI("MQTT", "MQTT_EVENT_SUBSCRIBED, msg_id=%d", event->msg_id);
         break;
     case MQTT_EVENT_UNSUBSCRIBED:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_UNSUBSCRIBED, msg_id=%d", event->msg_id);
+        ESP_LOGI("MQTT", "MQTT_EVENT_UNSUBSCRIBED, msg_id=%d", event->msg_id);
         break;
     case MQTT_EVENT_PUBLISHED:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_PUBLISHED, msg_id=%d", event->msg_id);
+        ESP_LOGI("MQTT", "MQTT_EVENT_PUBLISHED, msg_id=%d", event->msg_id);
         break;
     case MQTT_EVENT_DATA:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_DATA");
+        ESP_LOGI("MQTT", "MQTT_EVENT_DATA");
         //printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
         //printf("DATA=%.*s\r\n", event->data_len, event->data);
         break;
     case MQTT_EVENT_ERROR:
-        ESP_LOGI("MQTTWSS", "MQTT_EVENT_ERROR");
+        ESP_LOGI("MQTT", "MQTT_EVENT_ERROR");
         break;
     default:
-        ESP_LOGI("MQTTWSS", "Other event id:%d", event->event_id);
+        ESP_LOGI("MQTT", "Other event id:%d", event->event_id);
         break;
     }
     return ESP_OK;
@@ -87,14 +77,6 @@ void mqtt_app_start(void)
 {
     /*
     const esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri = "wss://mqtt.eclipseprojects.io:443/mqtt",
-        .broker.verification.certificate = (const char *)mqtt_cert_key_pem_start,
-        .broker.verification.certificate_len = strlen((const char *)mqtt_cert_key_pem_start),
-        .session.keepalive = 90
-    };
-    */
-
-    const esp_mqtt_client_config_t mqtt_cfg = {
         .broker.address.uri = "mqtt://mqtt.flespi.io",
         .broker.address.hostname = "mqtt://mqtt.flespi.io",
         .broker.address.port = 1883,
@@ -103,7 +85,18 @@ void mqtt_app_start(void)
         .credentials.authentication.password = NULL,
         .session.keepalive = 90
     };
-
+    */
+   
+    //Config for using local broker
+    const esp_mqtt_client_config_t mqtt_cfg = {
+        .broker.address.uri = "mqtt://rasp.local",
+        //.broker.address.hostname = "mqtt://mqtt.flespi.io",
+        .broker.address.port = 8003,
+        .credentials.username = "node",
+        //.credentials.client_id = "node camera",
+        .credentials.authentication.password = "test",
+        .session.keepalive = 90
+    };
 
     ESP_LOGI("MQTTWSS", "[APP] Free memory: %" PRIu32 " bytes", esp_get_free_heap_size());
     client = esp_mqtt_client_init(&mqtt_cfg);

@@ -14,5 +14,8 @@
     "idf.portWin": "COM4",
     "idf.pythonBinPathWin": "C:\\Users\\TrongHuy\\.espressif\\python_env\\idf5.1_py3.11_env\\Scripts\\python.exe",
     "idf.toolsPathWin": "C:\\Users\\TrongHuy\\.espressif",
-    "idf.flashType": "UART"
+    "idf.flashType": "UART",
+    "files.associations": {
+        "dht11.h": "c"
+    }
 }

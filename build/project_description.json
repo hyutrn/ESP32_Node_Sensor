@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "server_node_v1",
-    "project_version":    "729ba7e-dirty",
+    "project_version":    "d809412-dirty",
     "project_path":       "C:/Users/TrongHuy/ProjectIDF/server_node_v1",
     "idf_path":           "C:/Users/TrongHuy/esp/v5.1.4/esp-idf",
     "build_dir":          "C:/Users/TrongHuy/ProjectIDF/server_node_v1/build",
